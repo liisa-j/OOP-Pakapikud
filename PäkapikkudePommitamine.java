@@ -10,17 +10,28 @@ public class PäkapikkudePommitamine {
         Scanner in = new Scanner(System.in);
         int mänguväljapikkus = in.nextInt();
 
-
-        // loome mänguväljad ühele mängijale
+        // loome mänguvälja ühele mängijale
         mänguVäli minu = new mänguVäli();
         minu.looMänguväli(mänguväljapikkus, mets);
         minu.prindiMänguväli();
         System.out.println();
 
         minu.arvutaPäkapikud();
-        minu.lisapikud();
-        System.out.println("Selles mängus osaleb päkapikke: " + minu.getPäkapikud());
 
+        // kasutaja saab valida, kas paigutada päkapikud ise või lasta arvutil seda teha
+        System.out.println("Kas soovid päkapikud ise paigutada? (true/false):");
+        boolean isePaigutada = in.nextBoolean();
+
+        if (isePaigutada) {
+            for (int i = 0; i < minu.getPäkapikud(); i++) {
+                minu.mängijaPaigutaPäkapikk();
+            }
+        } else {
+            minu.lisapikud();
+        }
+
+        System.out.println("Sinu mänguväli:");
+        minu.prindiMänguväli();
 
         // loome mänguvälja teisele (arvutile):
         VastaseMänguVäli sinu = new VastaseMänguVäli();
@@ -31,7 +42,6 @@ public class PäkapikkudePommitamine {
         sinu.arvutaPäkapikud();
         sinu.lisapikud();
         System.out.println("Selles mängus osaleb arvutil päkapikke: " + sinu.getPäkapikud());
-
 
         // Siin läheb mänguks:
         do {
@@ -48,7 +58,6 @@ public class PäkapikkudePommitamine {
         }
         while ((minu.getPäkapikud() > 0) && (sinu.getPäkapikud() > 0));
 
-
         System.out.println("Mäng sai läbi!");
         System.out.println("Mul on alles päkapikke: " + minu.getPäkapikud());
         System.out.println("Arvutil on alles päkapikke: " + sinu.getPäkapikud());
@@ -59,6 +68,6 @@ public class PäkapikkudePommitamine {
             System.out.println("Juhuuu, võitsid!");
         }
 
-
+        
     }
 }
