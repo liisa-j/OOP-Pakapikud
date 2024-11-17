@@ -7,6 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class mänguVäli {
     private char[][] mänguväli;
     private int päkapikud = 0;
+    //private int mänguväljapikkus;
+
 
     // getter mänguvälja väljale
     public char[][] getMänguväli() {
@@ -53,6 +55,7 @@ public class mänguVäli {
             }
             System.out.println();
         }
+        System.out.println();
 }
 
     // päkapikkude hulga arvutaja
@@ -67,8 +70,38 @@ public class mänguVäli {
         for (int i = 0; i < getPäkapikud(); i++) {
             int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
             int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+            while (!sobivAsukoht(rida,veerg) || !poleKõrvuti(rida, veerg)){
+                rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+                veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+                }
             this.mänguväli[rida][veerg] = 'P';
         }
+    }
+
+    // Elleni meetod ise päkapikkude lisamiseks:
+    public void valinPäkapikud() {
+        Scanner ise = new Scanner(System.in);
+        int mituTükkiAlles = getPäkapikud();
+        while (mituTükkiAlles >0) {
+            System.out.println("Pead paika panema nii mitu päkapikku: " + mituTükkiAlles);
+            System.out.println("Vali rida: 0-" + (mänguväli.length-1) + ":");
+            int rida = ise.nextInt();
+            System.out.println("Vali veerg: 0-" + (mänguväli.length-1) + ":");
+            int veerg = ise.nextInt();
+            if (sobivAsukoht(rida,veerg) && poleKõrvuti(rida, veerg)) {
+                this.mänguväli[rida][veerg] = 'P';
+                mituTükkiAlles--;
+            } else {
+                System.out.println("Ebasobiv asukoht, proovi uuesti");
+            }
+            prindiMänguväli();
+        }
+    }
+
+    // Elleni meetod valinPäkapikud meetodi sees kasutamiseks:
+    private boolean sobivAsukoht(int rida, int veerg) {
+        return rida >= 0 && rida < mänguväli.length && veerg >= 0
+                && veerg < mänguväli.length && mänguväli[rida][veerg] =='M';
     }
 
 
@@ -78,7 +111,8 @@ public class mänguVäli {
     public void pommita(){
         int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
         int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
-        System.out.println("Vastane nimega Suur Paha Arvuti proovib su päkapikku tabada koordinaatidelt: " + rida + ", " + veerg);
+        System.out.println("Vastane nimega Suur Paha Arvuti proovib su päkapikku tabada koordinaatidelt: "
+                + rida + ", " + veerg);
 
         if (this.mänguväli[rida][veerg] == 'P'){
             System.out.println("Oh ei, ta pommis su päkapikku!");
@@ -96,6 +130,32 @@ public class mänguVäli {
         }
 
     }
+
+
+    // Serle meetod, mis kontrollib, kas päkapikud on kõrvuti:
+    private boolean poleKõrvuti(int rida, int veerg) {
+        int[][] naabrid = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        //kui koordinaat ei ole tühi, siis koht ei sobi
+        if (this.mänguväli[rida][veerg] != 'M') {
+            return false;
+        }
+
+        //kontrollib, kas on naaberruudus päkapikke
+        for (int[] naaber : naabrid) {
+            int naaberRida = rida + naaber[0];
+            int naaberVeerg = veerg + naaber[1];
+
+            //mänguväljaku suurus
+            if (naaberRida >= 0 && naaberRida < mänguväli.length &&
+                    naaberVeerg >= 0 && naaberVeerg < mänguväli[0].length) {
+                if (this.mänguväli[naaberRida][naaberVeerg] == 'P') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
 
 }
