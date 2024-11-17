@@ -70,7 +70,7 @@ public class mänguVäli {
         for (int i = 0; i < getPäkapikud(); i++) {
             int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
             int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
-            while (!sobivAsukoht(rida,veerg) || !poleKõrvuti(rida, veerg)){
+            while (this.mänguväli[rida][veerg] == 'P' || !poleKõrvuti(rida, veerg)){
                 rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
                 veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
                 }
