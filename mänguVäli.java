@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class mänguVäli {
     private char[][] mänguväli;
     private int päkapikud = 0;
+    private int mänguväljapikkus;
 
     // getter mänguvälja väljale
     public char[][] getMänguväli() {
@@ -30,6 +31,7 @@ public class mänguVäli {
 
     // loob algse tühja (st metsaga täidetud) mänguvälja ja muudab isendivälja
     public void looMänguväli(int mänguväljapikkus, char mets){
+        this.mänguväljapikkus = mänguväljapikkus;
         char[][] mänguLaud = new char[mänguväljapikkus][mänguväljapikkus];
         for (char[] rida : mänguLaud){
             Arrays.fill(rida, mets);
