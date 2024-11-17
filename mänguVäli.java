@@ -63,83 +63,111 @@ public class mänguVäli {
         int päkapikke = (int) (b*b*0.15);
         this.setPäkapikud(päkapikke);
     }
+    // genereeritakse päkapikkudele juhuslikud asukohad
+    public void lisapikud(){
+        for (int i = 0; i < getPäkapikud(); i++) {
+            int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+            int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+            this.mänguväli[rida][veerg] = 'P';
+        }
+    }
+    public void valinPäkapikud() {
+        Scanner ise = new Scanner(System.in);
+        int mituTükkiAlles = getPäkapikud();
+        while (mituTükkiAlles >0) {
+            System.out.println("Pead paika panema nii mitu päkapikkus: " + mituTükkiAlles);
+            System.out.println("Vali rida: 0-" + (mänguväli.length-1) + ":");
+            int rida = ise.nextInt();
+            System.out.println("Vali veerg: 0-" + (mänguväli.length-1) + ":");
+            int veerg = ise.nextInt();
+            if (sobivAsukoht(rida,veerg)) {
+                this.mänguväli[rida][veerg] = 'P';
+                mituTükkiAlles--;
+            } else {
+                System.out.println("Ebasobiv asukoht, proovi uuesti");
+            }
+            prindiMänguväli();
+        }
+    }private boolean sobivAsukoht(int rida, int veerg) {
+        return rida >= 0 && rida < mänguväli.length && veerg >= 0 && veerg < mänguväli.length && mänguväli[rida][veerg] =='M';
+    }
 
     //päkapikkude paigutamine, et ei tohi olla kõrvuti
     //kontrollime uue päkapiku lisamisel, et kas valitud koordinaat on vaba
     //ning siis naaberruutude kontroll
-    private boolean poleKõrvuti(int rida, int veerg) {
-        int[][] naabrid = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-        //kui koordinaat ei ole tühi, siis koht ei sobi
-        if (this.mänguväli[rida][veerg] != 'M') {
-            return false;
+    //private boolean poleKõrvuti(int rida, int veerg) {
+    //    int[][] naabrid = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+    //    //kui koordinaat ei ole tühi, siis koht ei sobi
+    //    if (this.mänguväli[rida][veerg] != 'M') {
+    //        return false;
         }
 
-        //kontrollib, kas on naaberruudus päkapikke
-        for (int[] naaber : naabrid) {
-            int naaberRida = rida + naaber[0];
-            int naaberVeerg = veerg + naaber[1];
+    //    //kontrollib, kas on naaberruudus päkapikke
+    //    for (int[] naaber : naabrid) {
+    //        int naaberRida = rida + naaber[0];
+    //        int naaberVeerg = veerg + naaber[1];
 
             //mänguväljaku suurus
-            if (naaberRida >= 0 && naaberRida < mänguväli.length &&
-                    naaberVeerg >= 0 && naaberVeerg < mänguväli[0].length) {
-                if (this.mänguväli[naaberRida][naaberVeerg] == 'P') {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    //        if (naaberRida >= 0 && naaberRida < mänguväli.length &&
+    //                naaberVeerg >= 0 && naaberVeerg < mänguväli[0].length) {
+    //            if (this.mänguväli[naaberRida][naaberVeerg] == 'P') {
+    //                return false;
+    //            }
+    //        }
+    //    }
+    //    return true;
+    //}
 
     //mängija saab käsitsi päkapiku asukoha valida
     //enne mängimist inimesele kuvatakse list valikutest
-    public void mängijaPaigutaPäkapikk() {
-        Scanner scanner = new Scanner(System.in);
-        boolean asukohtPaigaldatud = false;
+    //public void mängijaPaigutaPäkapikk() {
+    //    Scanner scanner = new Scanner(System.in);
+    //    boolean asukohtPaigaldatud = false;
 
-        while (!asukohtPaigaldatud) {
-            prindiVõimalikudKohad();
-            System.out.println("Sisesta päkapiku rea number:");
-            int rida = scanner.nextInt();
-            System.out.println("Sisesta päkapiku veeru number:");
-            int veerg = scanner.nextInt();
+    //    while (!asukohtPaigaldatud) {
+    //        prindiVõimalikudKohad();
+    //        System.out.println("Sisesta päkapiku rea number:");
+    //        int rida = scanner.nextInt();
+    //        System.out.println("Sisesta päkapiku veeru number:");
+    //        int veerg = scanner.nextInt();
 
-            if (poleKõrvuti(rida, veerg)) {
-                mänguväli[rida][veerg] = 'P';
-                asukohtPaigaldatud = true;
-            } else {
-                System.out.println("Valitud koht ei sobi. Palun vali uuesti.");
-            }
-        }
-    }
+    //        if (poleKõrvuti(rida, veerg)) {
+    //            mänguväli[rida][veerg] = 'P';
+    //            asukohtPaigaldatud = true;
+    //        } else {
+    //            System.out.println("Valitud koht ei sobi. Palun vali uuesti.");
+    //        }
+    //    }
+    //}
 
     // genereeritakse päkapikkudele juhuslikud asukohad, mis ei puutu kokku
-    public void lisapikud(){
-        for (int i = 0; i < getPäkapikud(); i++) {
-            boolean asukoht = false;
+   // public void lisapikud(){
+   //     for (int i = 0; i < getPäkapikud(); i++) {
+   //         boolean asukoht = false;
 
-            while (!asukoht) {
-                int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
-                int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+   //         while (!asukoht) {
+   //             int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
+   //             int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
 
-                //kontrollime, kas on tühi või mitte, kui on siis lisame
-                if (poleKõrvuti(rida, veerg)) {
-                    this.mänguväli[rida][veerg] = 'P';
-                    asukoht = true;
-                }
-            }
-        }
-    }
+   //             //kontrollime, kas on tühi või mitte, kui on siis lisame
+   //             if (poleKõrvuti(rida, veerg)) {
+   //                 this.mänguväli[rida][veerg] = 'P';
+   //                 asukoht = true;
+   //             }
+   //         }
+   //     }
+   // }
 
-    public void prindiVõimalikudKohad() {
-        System.out.println("Võimalikud kohad päkapiku lisamiseks:");
-        for (int rida = 0; rida < mänguväli.length; rida++) {
-            for (int veerg = 0; veerg < mänguväli[0].length; veerg++) {
-                if (poleKõrvuti(rida, veerg)) {
-                    System.out.println("Koordinaat: (" + rida + ", " + veerg + ")");
-                }
-            }
-        }
-    }
+   // public void prindiVõimalikudKohad() {
+   //     System.out.println("Võimalikud kohad päkapiku lisamiseks:");
+   //     for (int rida = 0; rida < mänguväli.length; rida++) {
+   //         for (int veerg = 0; veerg < mänguväli[0].length; veerg++) {
+   //             if (poleKõrvuti(rida, veerg)) {
+   //                 System.out.println("Koordinaat: (" + rida + ", " + veerg + ")");
+   //             }
+   //         }
+   //     }
+   // }
 
     // arvuti genereerib juhuslikult, kuhu pommitatakse
     // vastavalt sisendile muudetakse isendivälja (st
