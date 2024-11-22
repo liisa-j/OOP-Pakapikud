@@ -77,9 +77,11 @@ public class PäkapikkudePommitamine {
             if (minu.getPäkapikud() == 0) {
                 System.out.println("Kahjuks kaotasid mängu! Parem õnn järgmisel korral!");
                 info.addVastaseVõidud();
+                info.addMängeMängitud(); //LISATUD
             } else {
                 System.out.println("Juhuuu, võitsid!");
                 info.addMinuVõidud();
+                info.addMängeMängitud(); //LISATUD
             }
             info.statistika();
 
