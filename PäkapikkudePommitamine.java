@@ -41,13 +41,24 @@ public class PäkapikkudePommitamine {
 
 
             System.out.println("Kas soovid valida ise päkapikkude asukohti või panna paika juhuslikult: (1/2)");
-            int minuvalik = in.nextInt();
-            if (minuvalik == 1) {
-                minu.arvutaPäkapikud();
-                minu.valinPäkapikud();
-            } else {
-                minu.arvutaPäkapikud();
-                minu.lisapikud();
+            int minuvalik = 0;
+            while (minuvalik !=1 && minuvalik !=2) {
+                if (in.hasNextInt()) {
+                    minuvalik = in.nextInt();
+                    if (minuvalik == 1) {
+                        minu.arvutaPäkapikud();
+                        minu.valinPäkapikud();
+                        System.out.println("Selles mängus osaleb päkapikke: " + minu.getPäkapikud());
+                    }else if (minuvalik == 2) {
+                        minu.arvutaPäkapikud();
+                        minu.lisapikud();
+                        System.out.println("Selles mängus osaleb päkapikke: " + minu.getPäkapikud());
+                    }else {
+                        System.out.println("Proovi uuesti: 1 - valin ise päkapikud, 2 - päkapikkude juhuslikult paigutus");
+                    }
+                } else {
+                    in.next();
+                }
             }
 
 
