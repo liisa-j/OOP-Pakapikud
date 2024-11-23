@@ -111,15 +111,17 @@ public class mänguVäli {
     public void pommita(){
         int rida = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
         int veerg = ThreadLocalRandom.current().nextInt(0, getMänguväli().length);
-        System.out.println("Vastane nimega Suur Paha Arvuti proovib su päkapikku tabada koordinaatidelt: "
-                + rida + ", " + veerg);
 
         if (this.mänguväli[rida][veerg] == 'P'){
+            System.out.println("Vastane nimega Suur Paha Arvuti proovib su päkapikku tabada koordinaatidelt: "
+                    + rida + ", " + veerg);
             System.out.println("Oh ei, ta pommis su päkapikku!");
             getMänguväli()[rida][veerg] = 'X';
             setPäkapikud(getPäkapikud()-1);
         }
         else if (this.mänguväli[rida][veerg] == 'M'){
+            System.out.println("Vastane nimega Suur Paha Arvuti proovib su päkapikku tabada koordinaatidelt: "
+                    + rida + ", " + veerg);
             System.out.println("Suur paha arvuti lõi mööda! Hohoohooooo!");
             this.mänguväli[rida][veerg] = '0';
         }

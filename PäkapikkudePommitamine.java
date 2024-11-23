@@ -52,7 +52,7 @@ public class PäkapikkudePommitamine {
                     }else if (minuvalik == 2) {
                         minu.arvutaPäkapikud();
                         minu.lisapikud();
-                        System.out.println("Selles mängus osaleb päkapikke: " + minu.getPäkapikud());
+                        System.out.println("Selles mängus osaleb kummalgi mängijal päkapikke: " + minu.getPäkapikud());
                     }else {
                         System.out.println("Proovi uuesti: 1 - valin ise päkapikud, 2 - päkapikkude juhuslikult paigutus");
                     }
@@ -106,61 +106,3 @@ public class PäkapikkudePommitamine {
     }
 }
 
-
-
-        /*
-        System.out.println("Sisesta mänguvälja pikkus: ");
-        Scanner in = new Scanner(System.in);
-        int mänguväljapikkus = in.nextInt();
-
-
-        // loome mänguväljad ühele mängijale
-        mänguVäli minu = new mänguVäli();
-        minu.looMänguväli(mänguväljapikkus, mets);
-        minu.prindiMänguväli();
-        System.out.println();
-
-        minu.arvutaPäkapikud();
-        minu.lisapikud();
-        System.out.println("Selles mängus osaleb mõlemal mängijal päkapikke: " + minu.getPäkapikud());
-
-
-        // loome mänguvälja teisele (arvutile):
-        VastaseMänguVäli sinu = new VastaseMänguVäli();
-        sinu.looMänguväli(mänguväljapikkus, mets);
-        //sinu.prindiMänguväli();
-        System.out.println();
-
-        sinu.arvutaPäkapikud();
-        sinu.lisapikud();
-
-
-        // Siin läheb mänguks:
-        do {
-            // siin pommitame vastast
-            System.out.println("Päkapikke alles mul: " + minu.getPäkapikud());
-            sinu.pommita();
-            sinu.prindiMänguväli();
-
-            // siin pommitab vastane meid
-            System.out.println("Päkapikke alles tal: " + sinu.getPäkapikud());
-            minu.pommita();
-            minu.prindiMänguväli();
-
-        }
-        while ((minu.getPäkapikud() > 0) && (sinu.getPäkapikud() > 0));
-
-
-        System.out.println("Mäng sai läbi!");
-        System.out.println("Mul on alles päkapikke: " + minu.getPäkapikud());
-        System.out.println("Arvutil on alles päkapikke: " + sinu.getPäkapikud());
-        if (minu.getPäkapikud() == 0) {
-            System.out.println("Kahjuks kaotasid mängu! Parem õnn järgmisel korral!");
-        }
-        else {
-            System.out.println("Juhuuu, võitsid!");
-        }
-
-
-    }
-}*/
