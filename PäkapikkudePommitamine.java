@@ -56,7 +56,7 @@ public class PäkapikkudePommitamine {
                     }else {
                         System.out.println("Proovi uuesti: 1 - valin ise päkapikud, 2 - päkapikkude juhuslikult paigutus");
                     }
-                } else {
+                } else { System.out.println("Proovi sisestada number: 1 - valin ise päkapikud, 2 - päkapikkude juhuslikult paigutus");
                     in.next();
                 }
             }
