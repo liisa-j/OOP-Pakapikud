@@ -1,6 +1,9 @@
 package oop;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -158,6 +161,53 @@ public class mänguVäli {
         return true;
     }
 
+    // Funktsioon, mis salvestab mänguseisu
+    public void salvestus() throws IOException {
+        BufferedWriter save = null;
+        try {
+            save = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Minusalvestus.txt", false), StandardCharsets.UTF_8));
+        }
 
+        catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        char[][] vaheseiv = this.getMänguväli();
+        for (int i = 0; i < vaheseiv.length; i++) {
+            for (int j = 0; j < vaheseiv[i].length; j++) {
+                save.write(vaheseiv[i][j]);
+            }
+            save.write("\n");
+        }
+        save.write("#" + this.getPäkapikud());
+        save.close();
+    }
+
+    // funktsioon, mis taastab salvestatud mänguseisu
+    public void taastamine() throws IOException {
+        try (InputStream baidid = new FileInputStream("Minusalvestus.txt");
+             InputStreamReader tekst = new InputStreamReader(baidid, "UTF-8");
+             BufferedReader puhverdatud = new BufferedReader(tekst)) {
+            String rida = puhverdatud.readLine();
+            int pikkus = getMänguväli().length;
+            char[][] vaheseiv = new char[pikkus][pikkus];
+            int s=0;
+            while (rida != null) {
+                if (rida.contains("#")) {
+                    char[] jupid = rida.toCharArray();
+                    this.setPäkapikud(Character.getNumericValue(jupid[1]));
+                }
+                else {
+                    char[] r = rida.toCharArray();
+                    vaheseiv[s] = r;
+                    s += 1;
+                }
+                rida = puhverdatud.readLine();
+            }
+
+            // salvesta taastepunkt mänguväljaks:
+            this.setMänguväli(vaheseiv);
+        }
+    }
 
 }

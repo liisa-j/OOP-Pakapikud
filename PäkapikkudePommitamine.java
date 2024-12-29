@@ -1,5 +1,7 @@
 package oop;
 
+
+import java.io.*;
 import java.util.Scanner;
 
 public class PäkapikkudePommitamine {
@@ -17,10 +19,11 @@ public class PäkapikkudePommitamine {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         tutvustusTekst();
         char mets = 'M';
         Edetabel info = new Edetabel();
+
 
         Scanner in = new Scanner(System.in);
         while (true) {
@@ -70,18 +73,45 @@ public class PäkapikkudePommitamine {
             sinu.arvutaPäkapikud();
             sinu.lisapikud();
 
+            // Siin teeme esialgse salvestuse mänguseisust (et vältida viga, mis tekib kui mängija üritab salvestamata mängu taastada)
+            minu.salvestus();
+            sinu.salvestus();
 
             do {
-                System.out.println("Vastasel on siin peidus päkapikke: " + sinu.getPäkapikud());
-                sinu.prindiMänguväli();
-                info.addMinuKäigud();
-                sinu.pommita();
+                // Siin pakutakse iga käigu alguses võimalust mänguseisu salvestada või salvestust taastada
+                System.out.println("Kui soovid mänguseisu salvestada, vajuta klahvile s, kui soovid taasatada mängu varem salvestatud seisu, vajuta klahvile t, " +
+                        "jätkamiseks vajuta ükskõik, mis tähte!");
+                String salvestus = in.next();
 
-                System.out.println();
-                System.out.println("Minul on alles päkapikke: " + minu.getPäkapikud());
-                info.addVastaseKäigud();
-                minu.pommita();
-                minu.prindiMänguväli();
+
+                // Mänguseisu salvestamine
+                if (salvestus.equals("s")) {
+                    System.out.println("Mänguseis on salvestatud!");
+                    minu.salvestus();
+                    sinu.salvestus();
+                }
+
+                // Salvestatud mänguseisu taastamine
+                else if(salvestus.equals("t")){
+                    System.out.println("Taastame mängu salvestuspunkti...");
+                    minu.taastamine();
+                    sinu.taastamine();
+                }
+
+
+                else {
+
+                    System.out.println("Vastasel on siin peidus päkapikke: " + sinu.getPäkapikud());
+                    sinu.prindiMänguväli();
+                    info.addMinuKäigud();
+                    sinu.pommita();
+
+                    System.out.println();
+                    System.out.println("Minul on alles päkapikke: " + minu.getPäkapikud());
+                    info.addVastaseKäigud();
+                    minu.pommita();
+                    minu.prindiMänguväli();
+                }
             } while ((minu.getPäkapikud() > 0) && (sinu.getPäkapikud() > 0));
 
             System.out.println("Mäng sai läbi!");
@@ -102,7 +132,12 @@ public class PäkapikkudePommitamine {
                 System.out.println("Järgmise korrani!");
                 break;
             }
+
+
         }
+
+
     }
+
 }
 
